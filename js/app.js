@@ -18,6 +18,12 @@ function cargarEventListeners() {
     e.preventDefault();
     articulosCarrito = [];
     limpiarHTML();
+    sincronizarStorage();
+  });
+
+  document.addEventListener('DOMContentLoaded', () =>{
+    articulosCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    crearHTML();
   });
 }
 
@@ -49,6 +55,7 @@ function leerDatosCurso(curso) {
   } else articulosCarrito = [...articulosCarrito, infoCurso];
 
   crearHTML();
+  sincronizarStorage()
 }
 
 function eliminarCurso(e) {
@@ -65,6 +72,7 @@ function eliminarCurso(e) {
     });
 
     crearHTML();
+    sincronizarStorage();
   }
 }
 
@@ -90,4 +98,8 @@ function limpiarHTML() {
   while (contenedorCarrito.firstChild) {
     contenedorCarrito.removeChild(contenedorCarrito.firstChild);
   }
+}
+
+function sincronizarStorage() {
+  localStorage.setItem('carrito', JSON.stringify(articulosCarrito))
 }
